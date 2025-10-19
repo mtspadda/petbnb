@@ -12,6 +12,8 @@ import {
   Stack,
   Button,
 } from "@mui/material";
+import PetsIcon from "@mui/icons-material/Pets";
+
 // menu
 //import DrawerItem from "./DrawerItem";
 // rotas
@@ -32,8 +34,8 @@ const ListMenu = styled(List)(({ theme }) => ({
 //rotas
 const itemList = [
   {
-    text: "Become a host",
-    to: "/become-a-host",
+    text: "Become a minder",
+    to: "/become-a-minder",
   },
   {
     text: "How it works?",
@@ -43,13 +45,14 @@ const itemList = [
 
 const buttonList = [
   {
-    text: "sign in",
+    text: "log in",
     to: "/auth",
-    color: "#8b5cf6",
+    variant: "contained",
   },
   {
     text: "sign up",
     to: "/signup",
+    variant: "outlined",
   },
 ];
 
@@ -64,10 +67,21 @@ const Navbar = () => {
     >
       <StyledToolbar>
         <Typography variant="h4" component="h2" color="primary">
+          <PetsIcon
+            color="primary"
+            sx={{
+              display: "inline",
+              mx: 2,
+            }}
+          ></PetsIcon>
           PetMinder
         </Typography>
         <Box sx={{ display: { xs: "block", sm: "flex" } }}></Box>
-        <ListMenu>
+        <ListMenu
+          sx={{
+            width: "30%",
+          }}
+        >
           {itemList.map((item) => {
             const { text } = item;
             return (
@@ -75,7 +89,7 @@ const Navbar = () => {
                 <ListItemButton
                   to={item.to}
                   sx={{
-                    alignSelf: "center",
+                    borderRadius: "16px",
                     justifyContent: "space-between",
                     color: "#276CF5",
                     "&:hover": {
@@ -90,11 +104,16 @@ const Navbar = () => {
             );
           })}
         </ListMenu>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={1}>
           {buttonList.map((item) => {
             const { text } = item;
             return (
-              <Button variant="contained" elevation="3" color="primary">
+              <Button
+                variant={item.variant}
+                elevation="3"
+                color="primary"
+                sx={{ borderRadius: "20px", fontStyle: "bold" }}
+              >
                 {text}
               </Button>
             );
