@@ -1,13 +1,13 @@
-import React from "react";
-import { Box, styled, Typography } from "@mui/material";
-import cover from "../assets/images/cachorro-sorridente-sentado-no-sofa.jpg";
+import { Box, Container, styled, Typography } from "@mui/material";
+import cover from "../assets/images/cachorro-header.png";
+import SearchBar from "./Search";
 
 const Header = () => {
   const CustomBox = styled(Box)(({ theme }) => ({
+    width: "100%",
     display: "block",
-    minHeight: "80vh",
-    // tamanhos
-    gap: theme.spacing(2),
+    minHeight: "60vh",
+    // tamanho
     paddingTop: theme.spacing(35),
     // cor de fundo
     backgroundColor: "secondary",
@@ -22,7 +22,6 @@ const Header = () => {
   }));
 
   const BoxText = styled(Box)(({ theme }) => ({
-    paddingLeft: theme.spacing(8),
     [theme.breakpoints.down("md")]: {
       flex: "2",
       textAlign: "center",
@@ -40,7 +39,7 @@ const Header = () => {
           component="h1"
           sx={{
             fontWeight: 700,
-            color: "primary",
+            color: "white",
           }}
         >
           Find a sitter for your furry friend
@@ -50,14 +49,15 @@ const Header = () => {
           variant="p"
           component="p"
           sx={{
-            py: 3,
-            lineHeight: 1.6,
-            color: "primary",
+            py: 1,
+            lineHeight: 2,
+            fontWeight: 500,
+            color: "white",
           }}
         >
           Discover trusted sitters near you who'll treat your pet like family.
         </Typography>
-
+        <SearchBar />
         <Box></Box>
       </BoxText>
 

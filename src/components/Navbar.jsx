@@ -21,6 +21,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 
 // personalizacao
 const StyledToolbar = styled(Toolbar)({
+  display: "flex",
   justifyContent: "space-between",
 });
 
@@ -71,12 +72,11 @@ const Navbar = () => {
             color="primary"
             sx={{
               display: "inline",
-              mx: 2,
+              mx: 1,
             }}
           ></PetsIcon>
           PetMinder
         </Typography>
-        <Box sx={{ display: { xs: "block", sm: "flex" } }}></Box>
         <ListMenu
           sx={{
             width: "30%",
