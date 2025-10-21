@@ -87,7 +87,7 @@ export default function SearchBar() {
             value={petType}
             onChange={(e) => setPetType(e.target.value)}
             variant="outlined"
-            sx={{ flex: 1, borderRadius: "50px" }}
+            sx={{ flex: 1 }}
           >
             <MenuItem value="">
               <em>Select pet</em>
