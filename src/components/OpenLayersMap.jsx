@@ -18,7 +18,6 @@ const OpenLayersMap = () => {
   const [error, setError] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
 
-  // Get user's geolocation
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,18 +30,21 @@ const OpenLayersMap = () => {
         (err) => {
           console.log("Geolocation error:", err.message);
           // Fall back to Dublin coordinates
-          setUserLocation({ lat: 53.35, lon: -6.26 });
+          //setUserLocation({ lat: 53.35, lon: -6.26 });
+          // Fall back to location from the search
         },
       );
     } else {
       // Geolocation not supported, use default
-      setUserLocation({ lat: 53.35, lon: -6.26 });
+      // setUserLocation({ lat: 53.35, lon: -6.26 });
+      // Dont do anything
     }
   }, []);
 
   useEffect(() => {
     // Load OpenLayers JS
     const script = document.createElement("script");
+    // Best option ?
     script.src =
       "https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js";
     script.async = true;
@@ -138,10 +140,11 @@ const OpenLayersMap = () => {
           <MapIcon sx={{ mr: 2 }} />
           <Box>
             <Typography variant="h6" component="h1">
-              Our minders
+              Lorem ipsum
             </Typography>
             <Typography variant="caption" sx={{ opacity: 0.9 }}>
-              Find a minder near you
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+              lacus felis, lacinia consectetur elementum sed
             </Typography>
           </Box>
         </Toolbar>
