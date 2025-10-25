@@ -15,6 +15,7 @@ function LocationSearch({ onLocationSelect }) {
     const timer = setTimeout(async () => {
       setLoading(true);
       try {
+        //Maybe is possible use google for free
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=5`,
         );
@@ -37,7 +38,7 @@ function LocationSearch({ onLocationSelect }) {
 
   return (
     <Autocomplete
-      fullWidth
+      sx={{ flex: 1 }}
       options={options}
       loading={loading}
       onInputChange={(event, newValue) => setLocation(newValue)}
