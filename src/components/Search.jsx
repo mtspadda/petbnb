@@ -4,6 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SearchIcon from "@mui/icons-material/Search";
+import LocationSearch from "./ui/LocationSearch";
 
 const pets = [
   "Dog",
@@ -29,7 +30,6 @@ export default function SearchBar() {
       location,
       petType,
     });
-    // Add your search logic here
   };
 
   return (
@@ -70,15 +70,7 @@ export default function SearchBar() {
             sx={{ flex: 1 }}
           />
 
-          <TextField
-            fullWidth
-            label="Location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            variant="outlined"
-            placeholder="Enter location"
-            sx={{ flex: 1 }}
-          />
+          <LocationSearch />
 
           <TextField
             select
@@ -106,7 +98,7 @@ export default function SearchBar() {
             startIcon={<SearchIcon />}
             onClick={handleSearch}
             sx={{
-              borderRadius: "20px",
+              borderRadius: "2opx",
               flex: { xs: 1, md: 0 },
               minWidth: { md: "120px" },
               height: "56px",
