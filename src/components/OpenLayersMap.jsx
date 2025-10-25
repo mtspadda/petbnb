@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 
-const OpenLayersMap = () => {
+const OpenLayersMap = ({ location }) => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
+  const markerLayerRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
@@ -29,22 +30,20 @@ const OpenLayersMap = () => {
         },
         (err) => {
           console.log("Geolocation error:", err.message);
-          // Fall back to Dublin coordinates
-          //setUserLocation({ lat: 53.35, lon: -6.26 });
-          // Fall back to location from the search
+          // Fall back to location from the search if available
         },
       );
-    } else {
-      // Geolocation not supported, use default
-      // setUserLocation({ lat: 53.35, lon: -6.26 });
-      // Dont do anything
     }
   }, []);
+
+  // Determine which location to use: search location takes priority
+  const activeLocation = location
+    ? { lat: location.lat, lon: location.lng }
+    : userLocation;
 
   useEffect(() => {
     // Load OpenLayers JS
     const script = document.createElement("script");
-    // Best option ?
     script.src =
       "https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js";
     script.async = true;
@@ -55,12 +54,12 @@ const OpenLayersMap = () => {
           mapRef.current &&
           !mapInstanceRef.current &&
           window.ol &&
-          userLocation
+          activeLocation
         ) {
-          // Initialize the map with user's location
+          // Initialize the map with active location
           const center = window.ol.proj.fromLonLat([
-            userLocation.lon,
-            userLocation.lat,
+            activeLocation.lon,
+            activeLocation.lat,
           ]);
 
           mapInstanceRef.current = new window.ol.Map({
@@ -76,7 +75,7 @@ const OpenLayersMap = () => {
             }),
           });
 
-          // Add a marker at user's location
+          // Add a marker at active location
           const marker = new window.ol.Feature({
             geometry: new window.ol.geom.Point(center),
           });
@@ -94,13 +93,13 @@ const OpenLayersMap = () => {
 
           marker.setStyle(markerStyle);
 
-          const vectorLayer = new window.ol.layer.Vector({
+          markerLayerRef.current = new window.ol.layer.Vector({
             source: new window.ol.source.Vector({
               features: [marker],
             }),
           });
 
-          mapInstanceRef.current.addLayer(vectorLayer);
+          mapInstanceRef.current.addLayer(markerLayerRef.current);
           setMapLoaded(true);
         }
       } catch (err) {
@@ -124,7 +123,45 @@ const OpenLayersMap = () => {
         document.head.removeChild(script);
       }
     };
-  }, [userLocation]);
+  }, [activeLocation]);
+
+  // Update map when search location changes
+  useEffect(() => {
+    if (mapInstanceRef.current && location && window.ol) {
+      const center = window.ol.proj.fromLonLat([location.lng, location.lat]);
+
+      // Animate to new location
+      mapInstanceRef.current.getView().animate({
+        center: center,
+        zoom: 13,
+        duration: 1000,
+      });
+
+      // Update marker
+      if (markerLayerRef.current) {
+        const source = markerLayerRef.current.getSource();
+        source.clear();
+
+        const marker = new window.ol.Feature({
+          geometry: new window.ol.geom.Point(center),
+        });
+
+        const markerStyle = new window.ol.style.Style({
+          image: new window.ol.style.Circle({
+            radius: 8,
+            fill: new window.ol.style.Fill({ color: "#3f51b5" }),
+            stroke: new window.ol.style.Stroke({
+              color: "#ffffff",
+              width: 2,
+            }),
+          }),
+        });
+
+        marker.setStyle(markerStyle);
+        source.addFeature(marker);
+      }
+    }
+  }, [location]);
 
   return (
     <Box

@@ -1,7 +1,7 @@
 import { Autocomplete, TextField, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
 
-function LocationSearch() {
+function LocationSearch({ onLocationSelect }) {
   const [location, setLocation] = useState("");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,8 @@ function LocationSearch() {
       onChange={(event, newValue) => {
         if (newValue) {
           console.log("Selected coordinates:", newValue.lat, newValue.lng);
-          // Save coordinates here
+          // Pass coordinates to parent component
+          onLocationSelect({ lat: newValue.lat, lng: newValue.lng });
         }
       }}
       renderInput={(params) => (

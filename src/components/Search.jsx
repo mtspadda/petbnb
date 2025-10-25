@@ -17,10 +17,10 @@ const pets = [
   "Reptile",
 ];
 
-export default function SearchBar() {
+export default function SearchBar({ onLocationSelect }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [location, setLocation] = useState("");
+  const [location] = useState("");
   const [petType, setPetType] = useState("");
 
   const handleSearch = () => {
@@ -70,7 +70,7 @@ export default function SearchBar() {
             sx={{ flex: 1 }}
           />
 
-          <LocationSearch />
+          <LocationSearch onLocationSelect={onLocationSelect} />
 
           <TextField
             select

@@ -2,7 +2,7 @@ import { Box, Container, styled, Typography } from "@mui/material";
 import cover from "../assets/images/cachorro-header.png";
 import SearchBar from "./Search";
 
-const Header = () => {
+const Header = ({ onLocationSelect }) => {
   const CustomBox = styled(Box)(({ theme }) => ({
     width: "100%",
     display: "block",
@@ -57,7 +57,7 @@ const Header = () => {
         >
           Discover trusted sitters near you who'll treat your pet like family.
         </Typography>
-        <SearchBar />
+        <SearchBar onLocationSelect={onLocationSelect} />
         <Box></Box>
       </BoxText>
 

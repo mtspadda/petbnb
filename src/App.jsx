@@ -1,17 +1,19 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
-import SearchBar from "./components/Search";
+import { useState } from "react";
+
 import OpenLayersMap from "./components/OpenLayersMap";
 
 function App() {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   return (
     <>
       <Navbar />
-      <Header />
-      <OpenLayersMap />
+      <Header onLocationSelect={setSelectedLocation} />
+      <OpenLayersMap location={selectedLocation} />
     </>
   );
 }
-
 export default App;
